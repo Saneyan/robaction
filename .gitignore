@@ -1,0 +1,8 @@
+# for yp-spur environment
+yp-spur/
+yp-robot-params/
+libscip2awd/
+
+# for eight-figure action
+eight/eight
+eight/eight.dat

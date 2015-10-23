@@ -3,16 +3,19 @@
 #include <signal.h>
 #include <ypspur.h>
 
-void ctrlC(int aStatus)
+#define VEL 0.3
+#define ACCEL 1.0
+#define ANGVEL 1.0
+#define ANGACCEL 1.0
+#define SP_X 0.0
+#define SP_Y 0.0
+#define SP_TH 0.0
+
+void ctrlc(int aStatus)
 {
   Spur_stop();
   signal(SIGINT, NULL);
   exit(aStatus);
-}
-
-void setSigInt()
-{
-  signal(SIGINT, ctrlC);
 }
 
 int main(void)
@@ -23,33 +26,33 @@ int main(void)
   }
 
   // Setting up signal to stops when entering Ctrl-C.
-  setSigInt();
+  signal(SIGINT, ctrlc);
 
   // Setting up velocity.
-  Spur_set_vel(0.3);
+  Spur_set_vel(VEL);
 
   // Setting up acceleration.
-  Spur_set_accel(1.0);
+  Spur_set_accel(ACCEL);
 
   // Setting up angular velocity.
-  Spur_set_angvel(1.0);
+  Spur_set_angvel(ANGVEL);
 
   // Setting up angular acceleration.
-  Spur_set_angaccel(1.0);
+  Spur_set_angaccel(ANGACCEL);
 
   // Setting up starting point.
-  Spur_set_pos_GL(0, 0, 0);
+  Spur_set_pos_GL(SP_X, SP_Y, SP_TH);
   
-  Spur_circle_GL(0, 0, 1.0);
-  while (!Spur_near_ang_GL(-3.14 / 2, 0.1))
+  Spur_circle_GL(0.5, 0.5, 0.5);
+  while (!Spur_near_ang_GL(3.14, 0.1))
     usleep(10000);
 
-  Spur_circle_GL(0, 0, -1.0);
-  while (!Spur_near_ang_GL(-3.14 / 2, 0.1))
+  Spur_circle_GL(0.5, 1.5, -0.5);
+  while (!Spur_near_ang_GL(0.0, 0.1))
     usleep(10000);
 
-  Spur_circle_GL(0, 0, 1.0);
-  while (!Spur_near_ang_GL(3.14 / 2, 0.1))
+  Spur_circle_GL(0.5, 0.5, 0.5);
+  while (!Spur_near_ang_GL(-3.14 / 2, 0.1))
     usleep(10000);
 
   // Stop!
