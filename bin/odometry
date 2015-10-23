@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ROOTDIR=$(cd $(dirname $0) && pwd)/../
+
+ODOMETRY=$ROOTDIR/lib/odometry/odmlog
+
+if [ ! -e $ODOMETRY ]; then
+  echo "The 'odmlog' is required. Get the source code and build it."
+  exit 1
+fi
+
+$ODOMETRY $1

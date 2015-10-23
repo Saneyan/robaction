@@ -1,3 +1,7 @@
+# for libs
+lib/odometry.tar.gz
+lib/odometry/
+
 # for eight-figure action
-action/eight/eight
-action/eight/eight.dat
+actions/eight/eight
+actions/eight/eight.dat
