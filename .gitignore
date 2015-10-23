@@ -5,3 +5,7 @@ lib/odometry/
 # for eight-figure action
 actions/eight/eight
 actions/eight/eight.dat
+
+# for dist action
+actions/dist/dist
+actions/dist/dist.dat
