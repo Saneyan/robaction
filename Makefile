@@ -4,9 +4,9 @@
 # Author: Saneyuki TADOKORO <s1311374@u.tsukuba.ac.jp>
 #
 
-YP_SPUR_DIR = ./yp-spur
-YP_ROBOT_PARAMS_DIR = ./yp-robot-params
-LIBSCIP2AWD_DIR = ./libscip2awd
+YP_SPUR_DIR = ./lib/yp-spur
+YP_ROBOT_PARAMS_DIR = ./lib/yp-robot-params
+LIBSCIP2AWD_DIR = ./lib/libscip2awd
 
 all: submodule make-yp-spur make-robot-params make-libscip2awd
 

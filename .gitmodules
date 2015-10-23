@@ -1,9 +1,0 @@
-[submodule "yp-spur"]
-	path = yp-spur
-	url = http://www.roboken.iit.tsukuba.ac.jp/platform/repos/yp-spur.git
-[submodule "yp-robot-params"]
-	path = yp-robot-params
-	url = http://www.roboken.iit.tsukuba.ac.jp/platform/repos/yp-robot-params.git
-[submodule "libscip2awd"]
-	path = libscip2awd
-	url = http://www.roboken.iit.tsukuba.ac.jp/platform/repos/libscip2awd.git
