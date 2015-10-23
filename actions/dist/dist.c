@@ -6,6 +6,14 @@
 #include <math.h>
 #include <scip2awd.h>
 
+#define VEL 0.3
+#define ACCEL 1.0
+#define ANGVEL 1.0
+#define ANGACCEL 1.0
+#define SP_X 0.0
+#define SP_Y 0.0
+#define SP_TH 0.0
+
 int escape;
 
 // If terminating this program with using MD command, it will cost additional time for the next starting.
@@ -54,19 +62,19 @@ int main(int argc, char *argv[])
   Spur_init();
 
   // Setting up velocity.
-  Spur_set_vel(0.1);
+  Spur_set_vel(VEL);
 
   // Setting up acceleration.
-  Spur_set_accel(1.0);
+  Spur_set_accel(ACCEL);
 
   // Setting up angular velocity.
-  Spur_set_angvel(1.5);
+  Spur_set_angvel(ANGVEL);
 
   // Setting up angular acceleration.
-  Spur_set_angaccel(2.0);
+  Spur_set_angaccel(ANGACCEL);
 
   // Setting up starting point.
-  Spur_set_pos_GL(0, 0, 0);
+  Spur_set_pos_GL(SP_X, SP_Y, SP_TH);
 
   int trying_x = 0;
   int trying_y = 0;
