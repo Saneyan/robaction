@@ -1,0 +1,17 @@
+#!/bin/bash
+
+ROOTDIR=$(cd $(dirname $0) && pwd)/../
+COORDINATOR=$ROOTDIR/lib/yp-spur/src/ypspur-coordinator
+PARAMDIR=$ROOTDIR/lib/yp-robot-params/robot-params/
+
+if [ ! -e $COORDINATOR ]; then
+  echo "The 'ypspur-coordinator' is required. Clone the source codes and build them."
+  exit 1
+fi
+
+if [ ! -e $PARAMDIR ]; then
+  echo "The robot parameter files not found. Clone the source codes and build them."
+  exit 1
+fi
+
+sudo $COORDINATOR -p $PARAMDIR/$1.param -d $2
