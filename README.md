@@ -31,3 +31,7 @@ Before using actions, start up the coordinator to type `bin/coordinator`. Do not
 The Robaction supports odometry logging.
 
 You can use this feature to type `bin/odometry` from root directory.
+
+## License
+
+MIT License
