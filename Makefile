@@ -17,13 +17,13 @@ submodule:
 	git submodule update
 
 make-yp-spur:
-	cd $(YP_SPUR_DIR); ./configure && make
+	cd $(YP_SPUR_DIR); ./configure && make && sudo make install
 
 make-robot-params:
-	cd $(YP_ROBOT_PARAMS_DIR); ./configure && make
+	cd $(YP_ROBOT_PARAMS_DIR); ./configure && make && sudo make install
 
 make-libscip2awd:
-	cd $(LIBSCIP2AWD_DIR); ./configure && make
+	cd $(LIBSCIP2AWD_DIR); ./configure && make && sudo make install
 
 make-odometry:
 	curl $(ODOMETRY_URL) > lib/odometry.tar.gz

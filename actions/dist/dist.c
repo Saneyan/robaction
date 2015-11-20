@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <ypspur.h>
 #include <unistd.h>
-#include <sys/time.h>
+#include <time.h>
+#include <sys/timeb.h>
 #include <signal.h>
 #include <math.h>
 #include <scip2awd.h>
 
-#define VEL 0.3
+#define VEL 0.10
 #define ACCEL 1.0
 #define ANGVEL 1.0
 #define ANGACCEL 1.0
@@ -76,15 +77,18 @@ int main(int argc, char *argv[])
   // Setting up starting point.
   Spur_set_pos_GL(SP_X, SP_Y, SP_TH);
 
-  int trying_x = 0;
-  int trying_y = 0;
-  float target_y1 = 0;
-  float target_y2 = 0;
+  float target_y = 0;
+  int targeted = 0;
+  int adjusted = 0;
+
+  // Starting running.
+  Spur_line_GL(0, 0, 0);
+
+  double   elapsed_time;
+  int sec, millisec;
+  struct timeb timebuffer;
 
   while (!escape) {
-
-    // Starting running.
-    //Spur_line_FS(0, 0, 0);
 
     ret = S2Sdd_Begin(&buf, &scan);
 
@@ -99,6 +103,10 @@ int main(int argc, char *argv[])
           scan->data[ param.step_front - param.step_min - param.step_resolution / 4]);
       printf("Right distance: %lu mm\n",
           scan->data[ param.step_front - param.step_min + param.step_resolution / 4]);
+
+      unsigned long frontd = scan->data[param.step_front - param.step_min];
+      unsigned long leftd = scan->data[param.step_front - param.step_min - param.step_resolution / 4];
+      unsigned long rightd = scan->data[param.step_front - param.step_min + param.step_resolution / 4];
 
       // 処理例:スキャンしたデータをxy座標(m単位)に変換
       for (j = 0; j < scan->size; j ++) {
@@ -117,17 +125,48 @@ int main(int argc, char *argv[])
 
         // このx,yやscan->data[]の値を上手く使って処理を行う
         //printf("(X, Y) = (%f, %f)\n", x, y);
-
-        //usleep(10000);
-
-        if (x < 1.0) {
-          if (++trying_x >= 10) {
-            Spur_stop();
-          }
-        } else {
-          trying_x = 0;
-        }
       }
+
+      if (frontd < 500 && !adjusted) {
+        printf("adjusting");
+        Spur_spin_GL(3.14 / 2);
+        while (!Spur_near_ang_GL(3.14 / 2, 0.1));
+          usleep(10000);
+        Spur_set_pos_GL(SP_X, SP_Y, SP_TH);
+        adjusted = 1;
+      }
+
+      if (!targeted) {
+        targeted = 1;
+
+        // Start
+        ftime( &timebuffer );
+        sec = timebuffer.time;
+        millisec = timebuffer.millitm;
+
+        target_y = rightd;
+      } else {
+        targeted = 0;
+
+        // end
+        ftime( &timebuffer );
+        sec = timebuffer.time - sec;
+        millisec = timebuffer.millitm - millisec;
+        millisec += sec*1000;
+        elapsed_time = (double)millisec/1000;
+
+        float x = VEL * elapsed_time;
+        float y = rightd - target_y;
+        float r = y != 0 ? (180 / M_PI) * x / y : 0.0;
+
+        printf("X: %f\n", x);
+        printf("Y: %f\n", y);
+        printf("result: %f\n", r);
+        Spur_line_LC(1, 0, -r);
+
+        usleep(100000);
+      }
+
       // S2Sdd_BeginとS2Sdd_Endの間でのみ、構造体scanの中身にアクセス可能
       S2Sdd_End(&buf);
     } else if (ret == -1) {

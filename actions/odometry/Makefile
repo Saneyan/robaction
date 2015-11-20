@@ -1,17 +1,17 @@
 #
-# Makefile for dist action
+# Makefile for odometry action
 #
 # Author: Saneyuki TADOKORO <s1311374@u.tsukuba.ac.jp>
 #
 
 CC := gcc
 
-all: dist
+all: odometry
 
-dist: dist.c
+odometry: odometry.c
 	$(CC) $< -o $@ -lscip2awd -lypspur -lpthread -lm
 
 clean:
-	rm -rf ./dist
+	rm -rf ./odometry.c
 
 .PHONY: all clean

@@ -9,7 +9,7 @@ CC := gcc
 all: eight
 
 eight: eight.c
-	$(CC) -c $< -o $@
+	$(CC) $< -o $@ -lypspur
 
 clean:
 	rm -rf ./eight

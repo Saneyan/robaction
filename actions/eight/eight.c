@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <ypspur.h>
 
-#define VEL 0.3
+#define VEL 0.1
 #define ACCEL 1.0
 #define ANGVEL 1.0
 #define ANGACCEL 1.0
@@ -43,16 +43,16 @@ int main(void)
   // Setting up starting point.
   Spur_set_pos_GL(SP_X, SP_Y, SP_TH);
   
-  Spur_circle_GL(0.5, 0.5, 0.5);
+  Spur_circle_GL(0.1, 0.1, 0.1);
   while (!Spur_near_ang_GL(3.14, 0.1))
     usleep(10000);
 
-  Spur_circle_GL(0.5, 1.5, -0.5);
+  Spur_circle_GL(0.1, 0.1, -0.1);
   while (!Spur_near_ang_GL(0.0, 0.1))
     usleep(10000);
 
-  Spur_circle_GL(0.5, 0.5, 0.5);
-  while (!Spur_near_ang_GL(-3.14 / 2, 0.1))
+  Spur_circle_GL(0.1, 0.1, 0.1);
+  while (!Spur_near_ang_GL(-3.14, 0.1))
     usleep(10000);
 
   // Stop!
