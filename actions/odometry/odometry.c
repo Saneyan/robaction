@@ -135,15 +135,15 @@ int main( int aArgc, char **aArgv )
 
                 // センサ座標系からFS座標系への変換
                 x_fs = x_sensor;
-                y_fs = y_sensor;
+                y_fs = -y_sensor;
                 // y_fs = -y_sensor; // URGがひっくり返っているときは反転させる。
                 // URGの反転は３次元の座標変換で表すことができる
                 //  (ロール方向に180度回転していると考えられる)が、
                 //  今回の講義では２次元のみの座標変換を扱うので直接変換してしまう。
 
                 // FS座標系からGL座標系への変換
-                x_gl = x_fs + (pos_x_gl * cos(pos_theta_gl) - pos_y_gl * sin(pos_theta_gl));
-                y_gl = y_fs + (pos_x_gl * sin(pos_theta_gl) + pos_y_gl * cos(pos_theta_gl));
+                x_gl = pos_x_gl + ((x_fs) * cos(pos_theta_gl) - (y_fs) * sin(pos_theta_gl));
+                y_gl = pos_y_gl + ((x_fs) * sin(pos_theta_gl) + (y_fs) * cos(pos_theta_gl));
 
                 // 出力 
                 printf( "%f\t%f\n", x_gl, y_gl );
