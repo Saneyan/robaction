@@ -144,24 +144,6 @@ int main(int argc, char *argv[])
 
         // Nop
         usleep(1000000);
-
-        /*
-      } else if (rightd > 600 && rightd < 1000) {
-
-        Spur_spin_FS(M_PI / 18);
-        usleep(1000000);
-        Spur_line_FS(0, 0, 0);
-        usleep(1000000);
-        */
-
-      // When the robot can compute right distance, computes 2 point difference and degree and rotates itself.
-        /*
-      } else if (rightd < 500 && rightd != 0) {
-        Spur_spin_FS(M_PI / 18);
-        usleep(1000000);
-        Spur_line_FS(0, 0, 0);
-        usleep(1000000);
-        */
       } else {
         //Roba_reset_misscount(status);
         printf("Calclating TGT\n");
