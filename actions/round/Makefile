@@ -1,17 +1,17 @@
 #
-# Makefile for dist action
+# Makefile for round action
 #
 # Author: Saneyuki TADOKORO <s1311374@u.tsukuba.ac.jp>
 #
 
 CC := gcc
 
-all: dist
+all: round
 
-dist: dist.c
+dist: round.c
 	$(CC) $< -o $@ -lscip2awd -lypspur -lpthread -lm
 
 clean:
-	rm -rf ./dist
+	rm -rf ./round
 
 .PHONY: all clean

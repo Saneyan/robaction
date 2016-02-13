@@ -96,7 +96,6 @@ int main(int argc, char *argv[])
 
       int j;
 
-      // 新しいデータがあった時の処理をここで行う
       printf("Front distance: %lu mm\n",
           scan->data[ param.step_front - param.step_min ] );
       printf("Left distance: %lu mm\n",
@@ -108,23 +107,16 @@ int main(int argc, char *argv[])
       unsigned long leftd = scan->data[param.step_front - param.step_min - param.step_resolution / 4];
       unsigned long rightd = scan->data[param.step_front - param.step_min + param.step_resolution / 4];
 
-      // 処理例:スキャンしたデータをxy座標(m単位)に変換
       for (j = 0; j < scan->size; j ++) {
         float x, y;
         float scan_theta;
 
-        // scan->data[j]はmm単位の距離を表し、
-        // 20mm以下の距離は測距エラーを意味する
         if (scan->data[j] < 20) continue;
 
         scan_theta = M_PI * 2.0 * ( j - ( param.step_front - param.step_min ) ) / param.step_resolution;
 
-        // URGが上下逆についている場合は、scan_theta = -scan_theta;
         x = scan->data[j] * 0.001 * cos(scan_theta);
         y = scan->data[j] * 0.001 * sin(scan_theta);
-
-        // このx,yやscan->data[]の値を上手く使って処理を行う
-        //printf("(X, Y) = (%f, %f)\n", x, y);
       }
 
       if (frontd < 500 && !adjusted) {
@@ -167,14 +159,12 @@ int main(int argc, char *argv[])
         usleep(100000);
       }
 
-      // S2Sdd_BeginとS2Sdd_Endの間でのみ、構造体scanの中身にアクセス可能
       S2Sdd_End(&buf);
     } else if (ret == -1) {
-      // 致命的なエラー時(URGのケーブルが外れたときなど)
       fprintf(stderr, "ERROR: Fatal error occurred.\n");
       break;
     } else {
-      // 新しいデータはまだ無い
+      // No new data found
       usleep(10000);
     }
   }
